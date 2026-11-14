@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voyager 1 · 1 día luz — Señal VGR</title>
+<meta name="description" content="Celebra el hito de la Voyager 1 a 1 día luz: cuenta atrás, brújula estelar y emisión de VGR en código Morse.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000'/%3E%3Cg fill='none' stroke='%23d4af37'%3E%3Ccircle cx='256' cy='256' r='186' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='150' stroke-width='4' opacity='.7'/%3E%3Ccircle cx='256' cy='256' r='114' stroke-width='4' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23f3d98b'%3E%3Ccircle cx='178' cy='256' r='14'/%3E%3Ccircle cx='216' cy='256' r='14'/%3E%3Ccircle cx='254' cy='256' r='14'/%3E%3Crect x='284' y='242' width='64' height='28' rx='14'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" id="appleIcon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000'/%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Voyager VGR">
+
+<style>
+  :root{
+    --gold:#d4af37;
+    --gold-light:#f3d98b;
+    --gold-deep:#8c6d1f;
+    --g100:#ececf0;
+    --g300:#b9b9c2;
+    --g500:#80808b;
+    --g700:#3a3a42;
+    --line:rgba(212,175,55,.28);
+    --warn:#f0a35e;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{background:#000;color:var(--g100);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{
+    margin:0;min-height:100vh;min-height:100dvh;background:#000;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;overflow-x:hidden;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  body.modal-open{overflow:hidden}
+  #stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .app{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:22px 16px 48px;display:flex;flex-direction:column;gap:16px}
+  :focus-visible{outline:2px solid var(--gold-light);outline-offset:3px;border-radius:6px}
+
+  /* ---------- Hero ---------- */
+  .hero{text-align:center;padding:8px 4px 4px;position:relative}
+  .record{
+    width:92px;height:92px;border-radius:50%;margin:0 auto 14px;position:relative;
+    background:
+      radial-gradient(circle at center,#000 0 5%,var(--gold) 5% 12%,transparent 12%),
+      conic-gradient(from 0deg,#8c6d1f,#f3d98b,#8c6d1f,#d4af37,#8c6d1f,#f3d98b,#8c6d1f);
+    box-shadow:0 0 34px rgba(212,175,55,.35);
+    animation:spin 30s linear infinite;
+  }
+  .record::after{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:repeating-radial-gradient(circle at center,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.28) 2px 3px);
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .eyebrow{margin:0;font-size:.78rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase}
+  h1{
+    margin:6px 0 4px;font-family:Georgia,"Times New Roman",serif;font-weight:700;
+    font-size:clamp(1.9rem,9vw,2.7rem);line-height:1.1;
+    background:linear-gradient(90deg,#f3d98b,#d4af37 55%,#b8892a);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1 small{display:block;font-size:.5em;font-weight:400;letter-spacing:.12em;color:var(--g300);-webkit-text-fill-color:var(--g300);margin-top:4px}
+  .lead{margin:10px auto 14px;color:var(--g300);max-width:40ch}
+  .lead strong{color:var(--gold-light);letter-spacing:.12em}
+  .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center}
+  .info-link{
+    display:inline-flex;align-items:center;gap:8px;color:var(--gold-light);text-decoration:none;font-weight:600;
+    border-bottom:1px dashed var(--gold);padding:6px 2px;
+  }
+  .info-link:hover{color:#fff}
+  .chip{
+    appearance:none;border:1px solid var(--line);background:rgba(212,175,55,.08);color:var(--gold-light);
+    font:inherit;font-size:.85rem;padding:7px 14px;border-radius:99px;cursor:pointer;
+  }
+  .net{
+    position:absolute;top:0;right:0;font-size:.7rem;color:var(--g500);display:flex;align-items:center;gap:6px;
+  }
+  .net::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold)}
+  .net.off::before{background:#666}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:linear-gradient(180deg,rgba(26,22,8,.78),rgba(10,10,12,.84));
+    border:1px solid var(--line);border-radius:20px;padding:18px 16px;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    box-shadow:0 12px 40px rgba(0,0,0,.55);
+  }
+  .card-title{
+    display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:1.02rem;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--gold-light);
+  }
+  .step{
+    flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    border:1px solid var(--gold);color:var(--gold);font-size:.8rem;letter-spacing:0;
+  }
+  .muted{color:var(--g500)}
+  .small{font-size:.85rem}
+  p{margin:0 0 .6em}
+
+  /* ---------- Countdown ---------- */
+  .count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 12px}
+  .cd-box{
+    background:rgba(0,0,0,.55);border:1px solid var(--line);border-radius:14px;padding:10px 2px 8px;text-align:center;
+  }
+  .cd-box b{
+    display:block;font-family:Georgia,serif;font-size:clamp(1.8rem,10vw,2.6rem);line-height:1.1;
+    color:var(--gold);font-variant-numeric:tabular-nums;
+  }
+  .cd-box span{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g300)}
+  .status-line{
+    margin:0 0 8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);
+    border:1px solid #2c2c33;color:var(--g300);font-size:.92rem;
+  }
+  .status-line.live{
+    background:linear-gradient(180deg,#f3d98b,#d4af37);color:#1a1300;font-weight:700;border-color:var(--gold-light);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{50%{box-shadow:0 0 28px rgba(243,217,139,.55)}}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    appearance:none;border:1px solid var(--gold);background:transparent;color:var(--gold-light);
+    font:inherit;font-weight:700;padding:13px 16px;border-radius:14px;width:100%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;flex-wrap:wrap;
+    transition:transform .08s,background .2s,opacity .2s;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn:hover{background:rgba(212,175,55,.1)}
+  .btn.primary{
+    background:linear-gradient(180deg,#f3d98b,#d4af37 60%,#b8892a);color:#1a1300;border-color:var(--gold-light);
+    box-shadow:0 6px 24px rgba(212,175,55,.25);
+  }
+  .btn.primary:hover{filter:brightness(1.06)}
+  .btn.stop{background:#2a2a30;border-color:#e5e5ea;color:#fff}
+  .btn.small{min-height:42px;padding:8px 14px;font-size:.88rem;font-weight:600;margin-top:4px}
+  .btn[disabled]{opacity:.45;cursor:not-allowed}
+  .tag{
+    font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;
+    padding:2px 9px;border-radius:99px;background:rgba(0,0,0,.2);
+  }
+  .btn.outline .tag{background:rgba(212,175,55,.16)}
+
+  /* ---------- Compass ---------- */
+  .compass-wrap{position:relative;width:min(100%,320px);aspect-ratio:1;margin:14px auto 10px}
+  .compass{width:100%;height:100%;display:block;overflow:visible}
+  .ring{stroke:var(--gold);stroke-width:2;transition:filter .2s}
+  .compass.locked .ring{stroke:var(--gold-light);filter:drop-shadow(0 0 8px rgba(243,217,139,.9))}
+  .tick{stroke:var(--g500);stroke-width:1}
+  .tick.major{stroke:var(--gold);stroke-width:2}
+  .lbl{fill:var(--g500);font-size:9px;font-family:system-ui,sans-serif}
+  .lbl-c{fill:var(--g100);font-size:17px;font-weight:700;font-family:Georgia,serif}
+  .lbl-n{fill:var(--gold-light)}
+  .lbl-o{fill:var(--gold-light);font-size:12px;letter-spacing:.22em;font-family:system-ui,sans-serif;font-weight:700}
+  .west-wedge{fill:rgba(212,175,55,.16);stroke:var(--gold);stroke-width:1;transition:fill .2s}
+  .compass.locked .west-wedge{fill:rgba(243,217,139,.55)}
+  .pointer{fill:var(--gold-light);stroke:#000;stroke-width:1}
+  .readout{position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none}
+  .readout b{
+    font-family:Georgia,serif;font-size:clamp(2rem,10vw,2.7rem);line-height:1;color:var(--gold-light);
+    font-variant-numeric:tabular-nums;
+  }
+  .readout span{color:var(--g300);letter-spacing:.2em;font-size:.85rem;margin-top:6px}
+  .aim{
+    margin:6px 0 12px;text-align:center;padding:10px 12px;border-radius:12px;border:1px solid #333;
+    color:var(--g300);font-weight:600;font-size:.95rem;
+  }
+  .aim.ok{
+    border-color:var(--gold-light);color:#1a1300;background:linear-gradient(180deg,#f3d98b,#d4af37);
+    box-shadow:0 0 24px rgba(243,217,139,.45);
+  }
+  .seg{
+    display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border:1px solid var(--line);
+    border-radius:14px;background:rgba(0,0,0,.45);margin-bottom:12px;
+  }
+  .seg button{
+    appearance:none;border:0;background:transparent;color:var(--g300);font:inherit;font-size:.88rem;font-weight:600;
+    padding:10px 6px;border-radius:10px;cursor:pointer;
+  }
+  .seg button[aria-checked="true"]{background:rgba(212,175,55,.2);color:var(--gold-light);box-shadow:inset 0 0 0 1px var(--gold)}
+  .seg-label{font-size:.8rem;color:var(--g500);margin:0 0 6px}
+  .note{font-size:.85rem;color:var(--g300);margin:10px 0 0}
+  .note.err{color:var(--warn)}
+  .sim{margin-top:10px;padding:10px 12px;border:1px dashed var(--g700);border-radius:12px;font-size:.85rem;color:var(--g300)}
+  .sim input{width:100%;margin-top:6px}
+  input[type=range]{accent-color:var(--gold)}
+
+  /* ---------- Morse ---------- */
+  .morse{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin:14px 0 6px}
+  .mletter{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .mlabel{font-family:Georgia,serif;font-size:1.7rem;line-height:1;color:var(--gold-light)}
+  .msyms{display:flex;gap:6px;align-items:center;height:16px}
+  .msyms i{display:block;height:12px;border-radius:99px;background:#4a4a52}
+  .msyms .dot{width:12px}
+  .msyms .dash{width:36px}
+  .msyms i.active{background:#fff;box-shadow:0 0 14px 2px rgba(255,255,255,.9)}
+  .morse-text{text-align:center;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--g300);letter-spacing:.12em;margin:0 0 10px;font-size:.92rem}
+  .beacon{width:16px;height:16px;border-radius:50%;background:#2b2b31;margin:0 auto 14px}
+  .beacon.on{background:#fff;box-shadow:0 0 18px 6px rgba(255,255,255,.75)}
+  .speed{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;margin-bottom:14px;font-size:.88rem;color:var(--g300)}
+  .speed output{grid-column:1 / -1;color:var(--g500);font-size:.8rem}
+  .warn{display:flex;gap:10px;border-radius:14px;padding:12px 14px;font-size:.9rem;border:1px solid;margin:0 0 12px}
+  .warn .ico{flex:none;font-size:1.2rem;line-height:1.3}
+  .warn p{margin:0 0 .3em}
+  .warn p:last-child{margin:0}
+  .warn strong{color:#fff}
+  .warn.bright{background:rgba(212,175,55,.13);border-color:var(--gold);color:#fbe9b0}
+  .warn.caution{background:rgba(240,163,94,.08);border-color:rgba(240,163,94,.65);border-style:dashed;color:var(--g300)}
+  .warn.caution .ttl{color:var(--warn);font-weight:800}
+  .divider{border:0;border-top:1px solid var(--line);margin:18px 0}
+  .emit-msg{min-height:1.4em;margin:12px 0 0;text-align:center;font-size:.92rem;color:var(--g300)}
+  .emit-msg.error{color:var(--warn);font-weight:600}
+  .stack{display:flex;flex-direction:column;gap:10px}
+
+  footer{text-align:center;color:var(--g500);font-size:.78rem;padding:8px 8px 0}
+  footer a{color:var(--gold)}
+
+  /* ---------- Modal ---------- */
+  .modal{
+    position:fixed;inset:0;z-index:900;display:flex;align-items:flex-end;justify-content:center;
+    background:rgba(0,0,0,.8);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  }
+  .modal-panel{
+    width:100%;max-width:640px;max-height:92vh;max-height:92dvh;overflow:auto;background:#07070a;
+    border:1px solid var(--line);border-radius:22px 22px 0 0;padding:20px 18px 32px;position:relative;outline:none;
+    overscroll-behavior:contain;
+  }
+  @media (min-width:640px){
+    .modal{align-items:center;padding:24px}
+    .modal-panel{border-radius:22px}
+  }
+  .modal-head{
+    position:sticky;top:-20px;z-index:2;margin:-20px -18px 14px;padding:16px 18px 12px;background:#07070a;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);
+  }
+  .modal-head h2{margin:0;font-family:Georgia,serif;font-size:1.25rem;color:var(--gold-light)}
+  .icon-btn{
+    appearance:none;flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:transparent;
+    color:var(--gold-light);font-size:1.1rem;cursor:pointer;
+  }
+  .modal-body h3{margin:20px 0 6px;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+  .modal-body p,.modal-body li{color:var(--g300);font-size:.95rem}
+  .modal-body strong{color:#fff}
+  .modal-body ol,.modal-body ul{padding-left:1.25em;margin:0 0 .6em}
+  .modal-body li{margin-bottom:.45em}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+  .fact{border:1px solid var(--line);border-radius:12px;padding:10px;background:rgba(212,175,55,.06);text-align:center}
+  .fact b{display:block;font-family:Georgia,serif;font-size:1.15rem;color:var(--gold-light)}
+  .fact span{font-size:.75rem;color:var(--g300)}
+
+  /* ---------- Flash overlay ---------- */
+  .flash{
+    position:fixed;inset:0;z-index:1000;background:#000;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;cursor:pointer;will-change:background-color;
+    touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  }
+  .flash.on{background:#fff}
+  .flash-info{color:#9a9aa3;font-size:1.1rem;text-align:center;padding:0 24px;min-height:1.5em}
+  .flash-hint{
+    position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));text-align:center;
+    font-size:.85rem;color:#fff;mix-blend-mode:difference;opacity:.7;pointer-events:none;
+  }
+  .probe-video{position:fixed;left:-10px;top:-10px;width:2px;height:2px;opacity:0;pointer-events:none}
+
+  @media (prefers-reduced-motion:reduce){
+    .record{animation:none}
+    .status-line.live{animation:none}
+    *{transition:none !important}
+  }
+</style>
+</head>
+
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<main class="app">
+
+  <!-- ===== Cabecera ===== -->
+  <header class="hero">
+    <span class="net" id="netBadge">En línea</span>
+    <div class="record" aria-hidden="true"></div>
+    <p class="eyebrow">18 · NOV · 2026</p>
+    <h1>Voyager 1 a 1 día luz<small>Señal V · G · R hacia Ofiuco</small></h1>
+    <p class="lead">Enviemos juntos un destello de luz al espacio interestelar: <strong>VGR</strong> en código Morse.</p>
+    <div class="hero-actions">
+      <a href="#hito" id="openInfo" class="info-link" role="button" aria-haspopup="dialog">ℹ︎ Sobre el hito e instrucciones</a>
+      <button type="button" class="chip" id="installBtn" hidden>⬇ Instalar app</button>
+    </div>
+  </header>
+
+  <!-- ===== 1. Cuenta atrás ===== -->
+  <section class="card" aria-labelledby="h-count">
+    <h2 class="card-title" id="h-count"><span class="step">1</span>Cuenta atrás</h2>
+    <p class="muted small">Hasta la señal: <strong style="color:var(--g100)">17 nov 2026 · 18:30:00</strong> (hora peninsular de España). Ventana de emisión: 18:30–19:30.</p>
+    <div class="count" id="countdown" role="timer" aria-label="Cuenta atrás hasta el 17 de noviembre de 2026 a las 18:30">
+      <div class="cd-box"><b id="cd-d">00</b><span>días</span></div>
+      <div class="cd-box"><b id="cd-h">00</b><span>horas</span></div>
+      <div class="cd-box"><b id="cd-m">00</b><span>min</span></div>
+      <div class="cd-box"><b id="cd-s">00</b><span>seg</span></div>
+    </div>
+    <p class="status-line" id="cd-status">Calculando…</p>
+    <p class="muted small" id="cd-local"></p>
+    <button type="button" class="btn small" id="calBtn">📅 Añadir al calendario</button>
+  </section>
+
+  <!-- ===== 2. Brújula ===== -->
+  <section class="card" aria-labelledby="h-compass">
+    <h2 class="card-title" id="h-compass"><span class="step">2</span>Brújula estelar</h2>
+    <p class="muted small">Busca un lugar con horizonte despejado al Oeste (zona de Ofiuco). La zona dorada marca el rango <strong style="color:var(--g100)">250°–290°</strong>.</p>
+
+    <div class="compass-wrap">
+      <svg id="compass" class="compass" viewBox="0 0 300 300" role="img" aria-label="Brújula con la zona Oeste resaltada">
+        <circle cx="150" cy="150" r="146" fill="rgba(0,0,0,.65)"/>
+        <circle class="ring" cx="150" cy="150" r="138" fill="none"/>
+        <g id="dial"></g>
+        <line x1="150" y1="150" x2="150" y2="24" stroke="rgba(243,217,139,.55)" stroke-width="1" stroke-dasharray="3 4"/>
+        <circle cx="150" cy="150" r="3" fill="var(--gold-light)"/>
+        <path class="pointer" d="M141 1 L159 1 L150 21 Z"/>
+      </svg>
+      <div class="readout" aria-live="off"><b id="hdg">---°</b><span id="hdgCard">--</span></div>
+    </div>
+
+    <div class="aim" id="aimStatus" role="status" aria-live="polite">Brújula desactivada</div>
+
+    <p class="seg-label">Lado del móvil que apunta al cielo:</p>
+    <div class="seg" role="radiogroup" aria-label="Lado del móvil que apunta al cielo">
+      <button type="button" role="radio" aria-checked="true" data-mode="screen">📱 Pantalla</button>
+      <button type="button" role="radio" aria-checked="false" data-mode="back">🔦 Parte trasera</button>
+    </div>
+
+    <button type="button" class="btn primary" id="compassBtn">🧭 Activar brújula (permiso del giroscopio)</button>
+    <p class="note" id="compassMsg">Sostén el móvil en vertical, a la altura de los ojos. En iPhone/iPad es necesario conceder el permiso de movimiento y orientación.</p>
+    <p class="note" id="tiltNote" hidden>Móvil casi horizontal: se muestra hacia dónde apunta el borde superior. Para apuntar al cielo, sostenlo en vertical.</p>
+
+    <div class="sim" id="simBox" hidden>
+      <label for="simRange">No se detecta el sensor. Modo prueba — simular rumbo: <strong id="simVal" style="color:var(--gold-light)">0°</strong></label>
+      <input type="range" id="simRange" min="0" max="359" value="0">
+    </div>
+  </section>
+
+  <!-- ===== 3. Emisión Morse ===== -->
+  <section class="card" aria-labelledby="h-morse">
+    <h2 class="card-title" id="h-morse"><span class="step">3</span>Emisión Morse · VGR</h2>
+    <p class="muted small">Punto = 1 unidad · Raya = 3 unidades · Pausa entre letras = 3 · Pausa entre repeticiones = 7.</p>
+
+    <div class="morse" id="morseView" aria-label="V punto punto punto raya, G raya raya punto, R punto raya punto"></div>
+    <p class="morse-text">V ...-&nbsp;&nbsp; G --.&nbsp;&nbsp; R .-.</p>
+    <div class="beacon" id="beacon" aria-hidden="true"></div>
+
+    <div class="speed">
+      <label for="unit">Velocidad</label>
+      <input type="range" id="unit" min="200" max="700" step="25" value="350">
+      <output for="unit" id="unitOut"></output>
+    </div>
+
+    <div class="warn bright" role="note">
+      <span class="ico" aria-hidden="true">☀️</span>
+      <div>
+        <p><strong>Sube el brillo de la pantalla al máximo manualmente</strong> antes de empezar.</p>
+        <p>La web no puede cambiar el brillo por ti. Desactiva el brillo automático y el modo oscuro de lectura si puedes.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <button type="button" class="btn primary" id="btnScreen">💡 Usar pantalla <span class="tag">Recomendado</span></button>
+    </div>
+    <p class="note">Una capa blanca a pantalla completa parpadeará al ritmo del Morse. Toca la pantalla para detener.</p>
+
+    <hr class="divider">
+
+    <div class="warn caution" role="note">
+      <span class="ico" aria-hidden="true">⚠️</span>
+      <div>
+        <p class="ttl">Función experimental</p>
+        <p><strong>No funciona en iOS Safari</strong> (iPhone/iPad): Apple no permite controlar la linterna desde una web.</p>
+        <p>En <strong>Android (Chrome)</strong> se pedirá <strong>permiso de cámara</strong> y requiere HTTPS. Aun así, algunos móviles no exponen la linterna al navegador.</p>
+      </div>
+    </div>
+    <div class="stack">
+      <button type="button" class="btn outline" id="btnTorch">🔦 Usar linterna <span class="tag">Experimental</span></button>
+      <button type="button" class="btn stop" id="btnStop" hidden>■ Detener emisión</button>
+    </div>
+
+    <p class="emit-msg" id="emitMsg" role="status" aria-live="polite"></p>
+    <p class="note">Aviso de fotosensibilidad: la emisión produce destellos de luz intensa. Evítala si eres sensible a ellos.</p>
+  </section>
+
+  <footer>
+    <p>Proyecto comunitario no oficial, sin afiliación con la NASA. Funciona sin conexión una vez cargado.</p>
+    <p>«Per aspera ad astra» · Disco de Oro, Voyager 1977</p>
+  </footer>
+</main>
+
+<!-- ===== Capa de destello a pantalla completa ===== -->
+<div id="flash" class="flash" hidden role="button" aria-label="Emisión en curso. Toca para detener.">
+  <div id="flashInfo" class="flash-info"></div>
+  <div class="flash-hint">Toca la pantalla para detener</div>
+</div>
+
+<!-- ===== Modal del hito ===== -->
+<div id="modal" class="modal" hidden>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal-head">
+      <h2 id="modalTitle">Voyager 1: un día luz de distancia</h2>
+      <button type="button" class="icon-btn" id="closeInfo" aria-label="Cerrar ventana">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <h3>El hito histórico</h3>
+      <p>El <strong>18 de noviembre de 2026</strong>, la sonda <strong>Voyager 1</strong> estará a <strong>1 día luz</strong> de la Tierra. Será el primer objeto fabricado por la humanidad en alcanzar esa distancia: una señal de radio, que viaja a la velocidad de la luz, tardará un día entero en llegar hasta ella.</p>
+
+      <div class="facts">
+        <div class="fact"><b>≈ 25.900 M km</b><span>1 día luz en kilómetros</span></div>
+        <div class="fact"><b>≈ 173 UA</b><span>173 veces la distancia Tierra–Sol</span></div>
+        <div class="fact"><b>1977</b><span>Lanzamiento: 5 de septiembre</span></div>
+        <div class="fact"><b>2012</b><span>Entra en el espacio interestelar</span></div>
+      </div>
+
+      <h3>¿Qué es un día luz?</h3>
+      <p>Es la distancia que recorre la luz en 24 horas: 299.792 km/s × 86.400 s ≈ 25.900 millones de km. La Voyager 1 se aleja a unos 17 km/s (unos 61.000 km/h) hacia la constelación de <strong>Ofiuco</strong>.</p>
+
+      <h3>El Disco de Oro</h3>
+      <p>Cada Voyager lleva un disco de cobre bañado en oro con saludos en decenas de idiomas, sonidos de la Tierra, música e imágenes de nuestro planeta: un mensaje en una botella cósmica. Por eso esta app luce en oro.</p>
+
+      <h3>La invitación</h3>
+      <p>La NASA invita a enviar una señal de luz el <strong>17 de noviembre de 2026, después del atardecer</strong>, apuntando hacia el <strong>Oeste</strong> (constelación de Ofiuco), haciendo parpadear <strong>«VGR»</strong> en código Morse. En España peninsular, entre las <strong>18:30 y las 19:30</strong>.</p>
+      <p>Es un gesto simbólico: la luz de una pantalla se vuelve imperceptible a esa distancia y la sonda no puede detectarla. Pero la señal viajaría en la dirección correcta, y llegaría hasta donde estará la Voyager 1 aproximadamente un día después, justo cuando alcance su día luz.</p>
+
+      <h3>Instrucciones paso a paso</h3>
+      <ol>
+        <li><strong>Prepárate antes:</strong> carga la batería, activa «No molestar» y busca un sitio con horizonte despejado hacia el Oeste, lejos de farolas.</li>
+        <li><strong>Activa la brújula</strong> con el botón del paso 2 y concede el permiso del giroscopio (obligatorio en iPhone/iPad).</li>
+        <li><strong>Apunta al Oeste:</strong> gira hasta que el indicador marque entre 250° y 290° y se ilumine en dorado.</li>
+        <li><strong>Sube el brillo al máximo</strong> manualmente en los ajustes de tu móvil.</li>
+        <li>Pulsa <strong>«Usar pantalla»</strong> (recomendado). Tras una cuenta atrás de 3 segundos, sostén el móvil con la pantalla mirando hacia el Oeste y el brazo estirado.</li>
+        <li>Repite <strong>V · G · R</strong> durante unos minutos y toca la pantalla para detener.</li>
+        <li><strong>Opcional:</strong> con Android y Chrome, prueba «Usar linterna» (experimental) con la cámara trasera mirando al Oeste.</li>
+      </ol>
+
+      <h3>Seguridad y buenas prácticas</h3>
+      <ul>
+        <li><strong>No uses punteros láser:</strong> apuntarlos al cielo es peligroso para la aviación y puede ser delito.</li>
+        <li>No apuntes la luz a personas, vehículos ni aeronaves.</li>
+        <li>Respeta a tus vecinos y mantén la distancia de seguridad en la vía pública.</li>
+        <li>La emisión produce destellos intensos: evítala si eres fotosensible.</li>
+      </ul>
+
+      <h3>Sobre esta app</h3>
+      <ul>
+        <li>La brújula necesita sensores y <strong>HTTPS</strong>. En Android usa el magnetómetro; en iOS pide permiso explícito.</li>
+        <li>Con «Pantalla» activa, la brújula calcula hacia dónde mira la pantalla; con «Parte trasera», hacia dónde mira la cámara o la linterna.</li>
+        <li>Es una PWA: puedes instalarla y usarla sin conexión una vez cargada.</li>
+        <li>Si cambias de zona horaria, la cuenta atrás sigue el mismo instante absoluto (18:30 hora peninsular española).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <p style="position:relative;z-index:2;color:#d4af37;text-align:center;padding:20px">Esta aplicación necesita JavaScript para funcionar.</p>
+</noscript>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ============================================================
+     Utilidades
+     ============================================================ */
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const sleep = ms => new Promise(res => setTimeout(res, ms));
+  const norm = a => ((a % 360) + 360) % 360;
+  const pad = n => String(n).padStart(2, '0');
+  const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  /* ============================================================
+     Configuración del evento
+     ============================================================ */
+  // 17 de noviembre de 2026, 18:30:00 hora peninsular española (CET, UTC+1)
+  const TARGET_MS = Date.parse('2026-11-17T18:30:00+01:00');
+  const WINDOW_MS = 60 * 60 * 1000; // hasta las 19:30
+  const MESSAGE = ['V', 'G', 'R'];
+  const MORSE = { V: '...-', G: '--.', R: '.-.' };
+  const WEST = { min: 250, max: 290, center: 270 };
+
+  /* ============================================================
+     Fondo de estrellas
+     ============================================================ */
+  const Stars = (() => {
+    const cv = $('#stars');
+    const ctx = cv.getContext('2d');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let w = 0, h = 0, raf = 0, paused = false, last = 0;
+    const count = 170;
+    const list = Array.from({ length: count }, () => ({
+      nx: Math.random(), ny: Math.random(),
+      r: Math.random() * 1.2 + 0.25,
+      a: Math.random() * 0.6 + 0.3,
+      sp: Math.random() * 0.002 + 0.0006,
+      ph: Math.random() * Math.PI * 2,
+      gold: Math.random() < 0.14
+    }));
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth; h = window.innerHeight;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function draw(t) {
+      ctx.clearRect(0, 0, w, h);
+      for (const s of list) {
+        const a = reduce ? s.a : s.a * (0.55 + 0.45 * Math.sin(t * s.sp + s.ph));
+        ctx.globalAlpha = a;
+        ctx.fillStyle = s.gold ? '#f3d98b' : '#ffffff';
+        ctx.beginPath();
+        ctx.arc(s.nx * w, s.ny * h, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    function loop(t) {
+      raf = requestAnimationFrame(loop);
+      if (t - last < 40) return; // ~25 fps, ahorra batería
+      last = t;
+      draw(t);
+    }
+    function start() { if (reduce || paused || raf) return; raf = requestAnimationFrame(loop); }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+
+    return {
+      init() {
+        resize(); draw(0); start();
+        window.addEventListener('resize', () => { resize(); draw(performance.now()); });
+      },
+      pause() { paused = true; stop(); },
+      resume() { paused = false; start(); }
+    };
+  })();
+
+  /* ============================================================
+     Cuenta atrás
+     ============================================================ */
+  const cd = {
+    d: $('#cd-d'), h: $('#cd-h'), m: $('#cd-m'), s: $('#cd-s'),
+    status: $('#cd-status'), local: $('#cd-local')
+  };
+  let lastSecond = -1;
+
+  function describeLocalTime() {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'tu zona horaria';
+      const f = new Intl.DateTimeFormat('es-ES', {
+        weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+      });
+      const fEnd = new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit' });
+      cd.local.textContent = 'En tu dispositivo (' + tz + '): ' + f.format(new Date(TARGET_MS)) +
+        ' – ' + fEnd.format(new Date(TARGET_MS + WINDOW_MS)) + '.';
+    } catch (e) {
+      cd.local.textContent = '';
+    }
+  }
+
+  function tickCountdown() {
+    const now = Date.now();
+    let diff = TARGET_MS - now;
+    const state = diff > 0 ? 'before' : (now < TARGET_MS + WINDOW_MS ? 'during' : 'after');
+    if (diff < 0) diff = 0;
+    const total = Math.floor(diff / 1000);
+    if (total === lastSecond && state !== 'during') return;
+    lastSecond = total;
+
+    cd.d.textContent = pad(Math.floor(total / 86400));
+    cd.h.textContent = pad(Math.floor((total % 86400) / 3600));
+    cd.m.textContent = pad(Math.floor((total % 3600) / 60));
+    cd.s.textContent = pad(total % 60);
+
+    cd.status.classList.toggle('live', state === 'during');
+    if (state === 'before') {
+      if (diff > 86400000) {
+        cd.status.textContent = 'Prepara tu lugar de observación: horizonte despejado hacia el Oeste.';
+      } else if (diff > 3600000) {
+        cd.status.textContent = 'Falta menos de un día. Carga la batería y localiza tu lugar de observación.';
+      } else {
+        cd.status.textContent = '¡Casi es la hora! Ve a tu lugar, activa la brújula y sube el brillo al máximo.';
+      }
+    } else if (state === 'during') {
+      const left = Math.floor((TARGET_MS + WINDOW_MS - now) / 1000);
+      cd.status.textContent = '🚀 ¡Ventana abierta! Emite VGR ahora · quedan ' + pad(Math.floor(left / 60)) + ':' + pad(left % 60);
+    } else {
+      cd.status.textContent = 'La ventana del 17 de noviembre de 2026 ha terminado. ¡Gracias por enviar tu señal!';
+    }
+  }
+
+  function downloadICS() {
+    const fmt = ms => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Voyager VGR//ES', 'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      'UID:voyager-vgr-2026@voyager-vgr.local',
+      'DTSTAMP:' + fmt(Date.now()),
+      'DTSTART:' + fmt(TARGET_MS),
+      'DTEND:' + fmt(TARGET_MS + WINDOW_MS),
+      'SUMMARY:Señal VGR a la Voyager 1 (1 día luz)',
+      'DESCRIPTION:Apunta al Oeste (Ofiuco) y haz parpadear VGR en código Morse.',
+      'BEGIN:VALARM', 'TRIGGER:-PT30M', 'ACTION:DISPLAY',
+      'DESCRIPTION:Señal VGR a la Voyager 1 en 30 minutos', 'END:VALARM',
+      'END:VEVENT', 'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'voyager-vgr-2026.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }
+
+  /* ============================================================
+     Brújula estelar (deviceorientation)
+     ============================================================ */
+  const Compass = {
+    active: false, sim: false, has: false, relative: false,
+    sx: 0, sy: 1, heading: null, samples: 0,
+    mode: 'screen', evt: null, timer: 0, wasInRange: false, rafPending: false
+  };
+  const el = {
+    svg: $('#compass'), dial: $('#dial'), hdg: $('#hdg'), card: $('#hdgCard'), aim: $('#aimStatus'),
+    btn: $('#compassBtn'), msg: $('#compassMsg'), tilt: $('#tiltNote'),
+    simBox: $('#simBox'), simRange: $('#simRange'), simVal: $('#simVal')
+  };
+
+  const CARDINALS = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+  const cardinal = h => CARDINALS[Math.round(norm(h) / 22.5) % 16];
+
+  function buildDial() {
+    const P = (r, deg) => {
+      const a = deg * Math.PI / 180;
+      return [(150 + r * Math.sin(a)).toFixed(2), (150 - r * Math.cos(a)).toFixed(2)];
+    };
+    let s = '';
+    // Cuña de la zona Oeste (250°–290°)
+    const o1 = P(130, WEST.min), o2 = P(130, WEST.max), i2 = P(94, WEST.max), i1 = P(94, WEST.min);
+    s += '<path class="west-wedge" d="M' + o1.join(',') + ' A130 130 0 0 1 ' + o2.join(',') +
+         ' L' + i2.join(',') + ' A94 94 0 0 0 ' + i1.join(',') + ' Z"/>';
+    // Marcas
+    for (let d = 0; d < 360; d += 5) {
+      const major = d % 90 === 0, mid = d % 30 === 0, tenth = d % 10 === 0;
+      const len = major ? 16 : mid ? 11 : tenth ? 7 : 4;
+      const a = P(138, d), b = P(138 - len, d);
+      s += '<line class="tick' + (major ? ' major' : '') + '" x1="' + a[0] + '" y1="' + a[1] +
+           '" x2="' + b[0] + '" y2="' + b[1] + '"/>';
+    }
+    // Etiquetas
+    const names = { 0: 'N', 90: 'E', 180: 'S', 270: 'O' };
+    for (let d = 0; d < 360; d += 30) {
+      const isC = d % 90 === 0;
+      const p = P(isC ? 106 : 114, d);
+      const cls = isC ? ('lbl-c' + (d === 0 ? ' lbl-n' : '')) : 'lbl';
+      s += '<text class="' + cls + '" x="' + p[0] + '" y="' + p[1] + '" transform="rotate(' + d + ' ' + p[0] + ' ' + p[1] +
+           ')" text-anchor="middle" dominant-baseline="central">' + (isC ? names[d] : d) + '</text>';
+    }
+    // Etiqueta Ofiuco
+    const q = P(70, WEST.center);
+    s += '<text class="lbl-o" x="' + q[0] + '" y="' + q[1] + '" transform="rotate(' + WEST.center + ' ' + q[0] + ' ' + q[1] +
+         ')" text-anchor="middle" dominant-baseline="central">OFIUCO</text>';
+    el.dial.innerHTML = s;
+  }
+
+  // Rumbo (en grados) hacia donde apunta la parte trasera del móvil, compensando la inclinación (W3C)
+  function backHeading(alpha, beta, gamma) {
+    const r = Math.PI / 180;
+    const x = beta * r, y = gamma * r, z = alpha * r;
+    const cY = Math.cos(y), cZ = Math.cos(z), sX = Math.sin(x), sY = Math.sin(y), sZ = Math.sin(z);
+    const vx = -cZ * sY - sZ * sX * cY;
+    const vy = -sZ * sY + cZ * sX * cY;
+    return norm(Math.atan2(vx, vy) / r);
+  }
+
+  function setCompassMode(mode) {
+    Compass.mode = mode;
+    $$('.seg button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
+    Compass.has = false; // reinicia el suavizado
+  }
+
+  function pushHeading(h, immediate) {
+    const r = h * Math.PI / 180;
+    if (!Compass.has || immediate) {
+      Compass.sx = Math.sin(r); Compass.sy = Math.cos(r); Compass.has = true;
+    } else {
+      const k = 0.25;
+      Compass.sx += (Math.sin(r) - Compass.sx) * k;
+      Compass.sy += (Math.cos(r) - Compass.sy) * k;
+    }
+    Compass.heading = norm(Math.atan2(Compass.sx, Compass.sy) * 180 / Math.PI);
+    if (!Compass.rafPending) {
+      Compass.rafPending = true;
+      requestAnimationFrame(renderCompass);
+    }
+  }
+
+  function renderCompass() {
+    Compass.rafPending = false;
+    const h = Compass.heading;
+    if (h === null) return;
+    el.dial.setAttribute('transform', 'rotate(' + (-h).toFixed(1) + ' 150 150)');
+    el.hdg.textContent = (Math.round(h) % 360) + '°';
+    el.card.textContent = cardinal(h);
+
+    const inRange = h >= WEST.min && h <= WEST.max;
+    el.svg.classList.toggle('locked', inRange);
+    el.aim.classList.toggle('ok', inRange);
+    if (inRange) {
+      el.aim.textContent = '✔ ¡Apuntando al Oeste (Ofiuco)! Mantén esta dirección';
+      if (!Compass.wasInRange && navigator.vibrate) { try { navigator.vibrate(40); } catch (e) {} }
+    } else {
+      const d = ((WEST.center - h + 540) % 360) - 180; // >0: girar a la derecha
+      const toEdge = Math.max(0, Math.round(Math.abs(d) - 20));
+      el.aim.textContent = (d > 0 ? '↻ Gira a la derecha' : '↺ Gira a la izquierda') + ' ~' + toEdge + '° hasta el Oeste';
+    }
+    Compass.wasInRange = inRange;
+  }
+
+  function onOrient(e) {
+    if (Compass.sim) return;
+    const beta = Number.isFinite(e.beta) ? e.beta : 0;
+    const gamma = Number.isFinite(e.gamma) ? e.gamma : 0;
+    const upright = Math.abs(beta) > 45 && Math.abs(beta) < 135;
+    let base = null;
+
+    if (typeof e.webkitCompassHeading === 'number' && Number.isFinite(e.webkitCompassHeading)) {
+      base = e.webkitCompassHeading; // iOS: ya es respecto al norte magnético
+    } else if (Number.isFinite(e.alpha)) {
+      if (e.absolute === false && Compass.evt === 'deviceorientation') Compass.relative = true;
+      base = upright ? backHeading(e.alpha, beta, gamma) : norm(360 - e.alpha);
+    }
+    if (base === null) return;
+
+    Compass.samples++;
+    if (Compass.samples === 1) {
+      el.simBox.hidden = true;
+      el.msg.classList.remove('err');
+      el.msg.textContent = Compass.relative
+        ? 'Aviso: este navegador solo ofrece orientación relativa y el norte puede no ser exacto. Prueba con Chrome en Android.'
+        : 'Brújula activa. Calibra el móvil moviéndolo en forma de 8 si la lectura parece errática.';
+      if (Compass.relative) el.msg.classList.add('err');
+    }
+    el.tilt.hidden = upright;
+
+    let h = base;
+    if (upright && Compass.mode === 'screen') h = norm(base + 180); // la pantalla mira al lado contrario que la parte trasera
+    pushHeading(h);
+  }
+
+  function showSim(reason) {
+    el.simBox.hidden = false;
+    if (reason) { el.msg.textContent = reason; el.msg.classList.add('err'); }
+  }
+
+  async function enableCompass() {
+    if (Compass.active) return;
+    el.msg.classList.remove('err');
+
+    if (!window.isSecureContext) {
+      showSim('Los sensores de orientación requieren HTTPS. Abre la app desde una dirección segura.');
+      return;
+    }
+    if (typeof DeviceOrientationEvent === 'undefined') {
+      showSim('Este dispositivo o navegador no ofrece el sensor de orientación.');
+      return;
+    }
+
+    try {
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        const res = await DeviceOrientationEvent.requestPermission();
+        if (res !== 'granted') {
+          el.msg.textContent = 'Permiso denegado. Cierra Safari por completo y vuelve a intentarlo, o actívalo en Ajustes › Safari › Movimiento y orientación.';
+          el.msg.classList.add('err');
+          return;
+        }
+      }
+    } catch (err) {
+      el.msg.textContent = 'No se pudo solicitar el permiso del giroscopio: ' + (err && err.message ? err.message : err);
+      el.msg.classList.add('err');
+      return;
+    }
+
+    Compass.evt = ('ondeviceorientationabsolute' in window) ? 'deviceorientationabsolute' : 'deviceorientation';
+    window.addEventListener(Compass.evt, onOrient, true);
+    Compass.active = true;
+    el.btn.textContent = '🧭 Brújula activa';
+    el.btn.disabled = true;
+    el.msg.textContent = 'Esperando datos del sensor…';
+    el.aim.textContent = 'Esperando datos del sensor…';
+
+    Compass.timer = setTimeout(() => {
+      if (Compass.samples === 0) {
+        showSim('No se reciben datos del sensor (¿ordenador de sobremesa?). Puedes usar el modo prueba.');
+      }
+    }, 3000);
+  }
+
+  /* ============================================================
+     Código Morse: secuencia y visualización
+     ============================================================ */
+  const symEls = [];
+  const beacon = $('#beacon');
+  const unitInput = $('#unit');
+  const unitOut = $('#unitOut');
+
+  function buildSequence(unit) {
+    const seq = [];
+    MESSAGE.forEach((ch, li) => {
+      const code = MORSE[ch];
+      for (let si = 0; si < code.length; si++) {
+        seq.push({ on: true, ms: (code[si] === '.' ? 1 : 3) * unit, li, si });
+        if (si < code.length - 1) seq.push({ on: false, ms: unit });          // pausa entre símbolos
+      }
+      if (li < MESSAGE.length - 1) seq.push({ on: false, ms: unit * 3 });     // pausa entre letras
+    });
+    seq.push({ on: false, ms: unit * 7 });                                    // pausa entre repeticiones
+    return seq;
+  }
+
+  function currentUnit() { return Number(unitInput.value) || 350; }
+
+  function updateUnitLabel() {
+    const u = currentUnit();
+    const total = buildSequence(u).reduce((a, s) => a + s.ms, 0) / 1000;
+    unitOut.textContent = u + ' ms por unidad · ciclo completo ≈ ' + total.toFixed(1) + ' s';
+  }
+
+  function buildMorseView() {
+    const wrap = $('#morseView');
+    wrap.innerHTML = '';
+    MESSAGE.forEach((ch, li) => {
+      const box = document.createElement('div'); box.className = 'mletter';
+      const lab = document.createElement('span'); lab.className = 'mlabel'; lab.textContent = ch;
+      const syms = document.createElement('div'); syms.className = 'msyms';
+      symEls[li] = [];
+      for (const s of MORSE[ch]) {
+        const i = document.createElement('i');
+        i.className = s === '.' ? 'dot' : 'dash';
+        syms.appendChild(i);
+        symEls[li].push(i);
+      }
+      box.appendChild(lab); box.appendChild(syms);
+      wrap.appendChild(box);
+    });
+  }
+
+  function clearHighlight() {
+    $$('.msyms i.active').forEach(i => i.classList.remove('active'));
+    beacon.classList.remove('on');
+  }
+  function highlight(step) {
+    $$('.msyms i.active').forEach(i => i.classList.remove('active'));
+    if (step.on && symEls[step.li] && symEls[step.li][step.si]) symEls[step.li][step.si].classList.add('active');
+    beacon.classList.toggle('on', step.on);
+  }
+
+  /* ============================================================
+     Control de emisión (pantalla / linterna)
+     ============================================================ */
+  const btnScreen = $('#btnScreen');
+  const btnTorch = $('#btnTorch');
+  const btnStop = $('#btnStop');
+  const msgEl = $('#emitMsg');
+  const flashEl = $('#flash');
+  const flashInfo = $('#flashInfo');
+  const Emitter = { token: 0, running: false, driver: null };
+
+  function setEmitMsg(text, type) {
+    msgEl.textContent = text || '';
+    msgEl.className = 'emit-msg' + (type ? ' ' + type : '');
+  }
+  function setBusy(b) {
+    btnScreen.disabled = b;
+    btnTorch.disabled = b;
+    btnStop.hidden = !b;
+  }
+
+  /* --- Wake Lock: mantiene la pantalla encendida --- */
+  let wakeLock = null;
+  async function acquireWakeLock() {
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => { wakeLock = null; });
+      }
+    } catch (e) { wakeLock = null; }
+  }
+  function releaseWakeLock() {
+    if (wakeLock) { try { wakeLock.release().catch(() => {}); } catch (e) {} wakeLock = null; }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && Emitter.running && !wakeLock) acquireWakeLock();
+  });
+
+  /* --- Driver: pantalla --- */
+  const ScreenDriver = {
+    async prepare() {
+      flashEl.classList.remove('on');
+      flashEl.hidden = false;
+      Stars.pause();
+      try {
+        if (flashEl.requestFullscreen) {
+          const p = flashEl.requestFullscreen({ navigationUI: 'hide' });
+          if (p && p.catch) p.catch(() => {});
+        } else if (flashEl.webkitRequestFullscreen) {
+          flashEl.webkitRequestFullscreen();
+        }
+      } catch (e) { /* iOS Safari en iPhone no admite pantalla completa en elementos */ }
+    },
+    set(on) { flashEl.classList.toggle('on', !!on); },
+    info(text) { flashInfo.textContent = text; if (text) setEmitMsg(text); },
+    async release() {
+      flashEl.classList.remove('on');
+      flashEl.hidden = true;
+      flashInfo.textContent = '';
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          const p = document.exitFullscreen(); if (p && p.catch) p.catch(() => {});
+        } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      } catch (e) {}
+      Stars.resume();
+    }
+  };
+
+  /* --- Driver: linterna (getUserMedia + ImageCapture) --- */
+  function cameraError(err) {
+    const n = err && err.name;
+    if (n === 'NotAllowedError' || n === 'SecurityError') return 'Permiso de cámara denegado. Actívalo en los ajustes del navegador para poder usar la linterna.';
+    if (n === 'NotFoundError' || n === 'OverconstrainedError') return 'No se ha encontrado una cámara trasera disponible en este dispositivo.';
+    if (n === 'NotReadableError' || n === 'AbortError') return 'La cámara está en uso por otra aplicación o no se pudo abrir.';
+    return 'No se pudo acceder a la cámara: ' + (err && err.message ? err.message : err);
+  }
+
+  const TorchDriver = {
+    stream: null, track: null, video: null, ic: null,
+
+    async prepare() {
+      if (!window.isSecureContext) throw new Error('La linterna requiere HTTPS (contexto seguro).');
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error(isIOS
+          ? 'iOS Safari no permite controlar la linterna desde una web. Usa el botón «Usar pantalla».'
+          : 'Este navegador no permite acceder a la cámara (getUserMedia no disponible). Usa «Usar pantalla».');
+      }
+      setEmitMsg('Solicitando permiso de cámara…');
+
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: 'environment' }, width: { ideal: 640 }, height: { ideal: 480 } },
+          audio: false
+        });
+      } catch (err) {
+        throw new Error(cameraError(err));
+      }
+      this.stream = stream;
+      this.track = stream.getVideoTracks()[0];
+      if (!this.track) { await this.release(); throw new Error('No se obtuvo ninguna pista de vídeo de la cámara.'); }
+
+      // Algunos navegadores solo exponen "torch" cuando la cámara está activa y reproduciéndose
+      const v = document.createElement('video');
+      v.className = 'probe-video';
+      v.setAttribute('playsinline', '');
+      v.muted = true;
+      v.srcObject = stream;
+      document.body.appendChild(v);
+      this.video = v;
+      try { await v.play(); } catch (e) {}
+
+      // Capacidades: track + ImageCapture
+      let caps = {};
+      try { caps = this.track.getCapabilities ? this.track.getCapabilities() : {}; } catch (e) {}
+      let fill = [];
+      if ('ImageCapture' in window) {
+        try {
+          this.ic = new ImageCapture(this.track);
+          const pc = await this.ic.getPhotoCapabilities();
+          if (pc && pc.fillLightMode) fill = [].concat(pc.fillLightMode);
+        } catch (e) { /* getPhotoCapabilities puede no estar implementado */ }
+      }
+      const claims = caps.torch === true || fill.indexOf('flash') !== -1 || fill.indexOf('torch') !== -1;
+
+      // Prueba real: encender y comprobar que el ajuste se aplica
+      try {
+        await this.track.applyConstraints({ advanced: [{ torch: true }] });
+        await sleep(150);
+        const settings = this.track.getSettings ? this.track.getSettings() : {};
+        if (!claims && settings.torch !== true) throw new Error('sin linterna');
+        await this.track.applyConstraints({ advanced: [{ torch: false }] });
+      } catch (e) {
+        await this.release();
+        throw new Error(isIOS
+          ? 'iOS Safari no permite controlar la linterna desde una web. Usa el botón «Usar pantalla».'
+          : 'Este dispositivo o navegador no permite controlar la linterna desde la web. Usa el botón «Usar pantalla».');
+      }
+    },
+
+    async set(on) {
+      if (!this.track || this.track.readyState !== 'live') {
+        throw new Error('La cámara se ha detenido (por ejemplo, al salir de la app). Vuelve a intentarlo.');
+      }
+      try {
+        await this.track.applyConstraints({ advanced: [{ torch: !!on }] });
+      } catch (e) {
+        throw new Error('El dispositivo rechazó el control de la linterna durante la emisión.');
+      }
+    },
+
+    info(text) { setEmitMsg(text); },
+
+    async release() {
+      try {
+        if (this.track && this.track.readyState === 'live') {
+          try { await this.track.applyConstraints({ advanced: [{ torch: false }] }); } catch (e) {}
+        }
+        if (this.stream) this.stream.getTracks().forEach(t => t.stop());
+      } catch (e) {}
+      if (this.video) { try { this.video.pause(); this.video.srcObject = null; this.video.remove(); } catch (e) {} }
+      this.stream = null; this.track = null; this.video = null; this.ic = null;
+    }
+  };
+
+  /* --- Bucle de emisión --- */
+  async function startEmission(kind) {
+    if (Emitter.running) return;
+    const driver = kind === 'screen' ? ScreenDriver : TorchDriver;
+    const token = ++Emitter.token;
+    Emitter.running = true;
+    Emitter.driver = driver;
+    setBusy(true);
+    setCompassMode(kind === 'screen' ? 'screen' : 'back');
+    setEmitMsg('Preparando…');
+
+    let failure = null;
+    try {
+      await driver.prepare();
+      if (token !== Emitter.token) { await driver.release(); return; }
+      await acquireWakeLock();
+
+      for (let i = 3; i > 0; i--) {
+        if (token !== Emitter.token) break;
+        driver.info('Apunta al Oeste · empieza en ' + i);
+        await sleep(1000);
+      }
+      driver.info('');
+      if (token === Emitter.token) {
+        setEmitMsg(kind === 'screen'
+          ? 'Emitiendo V · G · R… toca la pantalla para detener.'
+          : 'Emitiendo V · G · R con la linterna… pulsa «Detener» para terminar.');
+      }
+
+      let t = performance.now();
+      while (token === Emitter.token) {
+        const seq = buildSequence(currentUnit());
+        for (const step of seq) {
+          if (token !== Emitter.token) break;
+          highlight(step);
+          await driver.set(step.on);
+          t += step.ms;
+          const wait = t - performance.now();
+          if (wait > 0) await sleep(wait);
+        }
+      }
+    } catch (err) {
+      failure = (err && err.message) ? err.message : 'Error durante la emisión.';
+    }
+
+    if (failure && token === Emitter.token) {
+      await stopEmission(failure, 'error');
+    }
+  }
+
+  async function stopEmission(message, type) {
+    if (!Emitter.running) return;
+    const driver = Emitter.driver;
+    Emitter.token++;
+    Emitter.running = false;
+    Emitter.driver = null;
+    releaseWakeLock();
+    clearHighlight();
+    setBusy(false);
+    setEmitMsg(message || 'Emisión detenida. ¡Gracias por enviar tu señal!', type);
+    if (driver) { try { await driver.release(); } catch (e) {} }
+  }
+
+  /* ============================================================
+     Modal
+     ============================================================ */
+  const modal = $('#modal');
+  const panel = $('.modal-panel', modal);
+  let lastFocus = null;
+
+  function openModal() {
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    panel.scrollTop = 0;
+    panel.focus();
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove('modal-open');
+    if (location.hash === '#hito') history.replaceState(null, '', location.pathname + location.search);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function trapFocus(e) {
+    if (e.key !== 'Tab' || modal.hidden) return;
+    const f = $$('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])', panel).filter(n => !n.hidden);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  /* ============================================================
+     PWA: icono iOS, instalación, estado de red, service worker
+     ============================================================ */
+  function makeAppleIcon() {
+    try {
+      const c = document.createElement('canvas');
+      c.width = c.height = 180;
+      const x = c.getContext('2d');
+      x.fillStyle = '#000'; x.fillRect(0, 0, 180, 180);
+      x.strokeStyle = '#d4af37';
+      [[65, 5, 1], [53, 2, .7], [40, 2, .5]].forEach(([r, lw, a]) => {
+        x.globalAlpha = a; x.lineWidth = lw; x.beginPath(); x.arc(90, 90, r, 0, Math.PI * 2); x.stroke();
+      });
+      x.globalAlpha = 1; x.fillStyle = '#f3d98b';
+      [62, 76, 89].forEach(cx => { x.beginPath(); x.arc(cx, 90, 5, 0, Math.PI * 2); x.fill(); });
+      x.beginPath();
+      if (x.roundRect) x.roundRect(100, 85, 23, 10, 5); else x.rect(100, 85, 23, 10);
+      x.fill();
+      $('#appleIcon').href = c.toDataURL('image/png');
+    } catch (e) {}
+  }
+
+  let deferredPrompt = null;
+  const installBtn = $('#installBtn');
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.hidden = false;
+  });
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    try { await deferredPrompt.userChoice; } catch (e) {}
+    deferredPrompt = null;
+    installBtn.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => { installBtn.hidden = true; });
+
+  const netBadge = $('#netBadge');
+  function updateNet() {
+    const on = navigator.onLine;
+    netBadge.textContent = on ? 'En línea' : 'Sin conexión · modo offline';
+    netBadge.classList.toggle('off', !on);
+  }
+  window.addEventListener('online', updateNet);
+  window.addEventListener('offline', updateNet);
+
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+
+  /* ============================================================
+     Eventos e inicialización
+     ============================================================ */
+  $('#openInfo').addEventListener('click', e => { e.preventDefault(); openModal(); });
+  $('#closeInfo').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (!modal.hidden) closeModal();
+      else if (Emitter.running) stopEmission('Emisión detenida. ¡Gracias por enviar tu señal!');
+    }
+    trapFocus(e);
+  });
+
+  $('#calBtn').addEventListener('click', downloadICS);
+  el.btn.addEventListener('click', enableCompass);
+  $$('.seg button').forEach(b => b.addEventListener('click', () => setCompassMode(b.dataset.mode)));
+  el.simRange.addEventListener('input', () => {
+    const v = Number(el.simRange.value);
+    Compass.sim = true;
+    Compass.samples = Math.max(Compass.samples, 1);
+    el.simVal.textContent = v + '°';
+    pushHeading(v, true);
+  });
+
+  btnScreen.addEventListener('click', () => startEmission('screen'));
+  btnTorch.addEventListener('click', () => startEmission('torch'));
+  btnStop.addEventListener('click', () => stopEmission('Emisión detenida. ¡Gracias por enviar tu señal!'));
+  flashEl.addEventListener('click', () => stopEmission('Emisión detenida. ¡Gracias por enviar tu señal!'));
+  window.addEventListener('pagehide', () => { if (Emitter.running) stopEmission('Emisión detenida.'); });
+  unitInput.addEventListener('input', updateUnitLabel);
+
+  // Arranque
+  buildDial();
+  buildMorseView();
+  updateUnitLabel();
+  describeLocalTime();
+  tickCountdown();
+  setInterval(tickCountdown, 250);
+  updateNet();
+  makeAppleIcon();
+  Stars.init();
+  if (location.hash === '#hito') openModal();
+})();
+</script>
+</body>
+</html>
