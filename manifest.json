@@ -1,25 +1,59 @@
 {
   "id": "./",
-  "name": "Voyager 1 — Un día luz. Una señal eterna.",
-  "short_name": "Voyager 1",
-  "description": "Una señal compartida para celebrar Voyager 1: cuenta atrás, brújula, Disco de Oro y emisión de VGR en código Morse.",
+  "name": "Voyager 1 · 1 día luz — Señal VGR",
+  "short_name": "Voyager VGR",
+  "description": "Celebra el hito de la Voyager 1 a 1 día luz: cuenta atrás con tu hora local, odómetro en vivo, brújula estelar, banda sonora del Disco de Oro y emisión de VGR en código Morse.",
   "lang": "es",
   "dir": "ltr",
-  "start_url": "./?source=pwa",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
-  "orientation": "any",
-  "background_color": "#080a0d",
-  "theme_color": "#080a0d",
-  "categories": ["education", "utilities"],
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": ["education", "science"],
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='96'%20fill='%23080a0d'/%3E%3Ccircle%20cx='256'%20cy='256'%20r='142'%20fill='none'%20stroke='%23d8b77c'%20stroke-width='10'/%3E%3Cellipse%20cx='256'%20cy='256'%20rx='182'%20ry='70'%20transform='rotate(-35%20256%20256)'%20fill='none'%20stroke='%23d8b77c'%20stroke-width='8'/%3E%3Cpath%20d='M256%20164l23%2069%2069%2023-69%2023-23%2069-23-69-69-23%2069-23z'%20fill='%23ecd3a1'/%3E%3C/svg%3E",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000'/%3E%3Cg fill='none' stroke='%23d4af37'%3E%3Ccircle cx='256' cy='256' r='186' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='150' stroke-width='4' opacity='.7'/%3E%3Ccircle cx='256' cy='256' r='114' stroke-width='4' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23f3d98b'%3E%3Ccircle cx='178' cy='256' r='14'/%3E%3Ccircle cx='216' cy='256' r='14'/%3E%3Ccircle cx='254' cy='256' r='14'/%3E%3Crect x='284' y='242' width='64' height='28' rx='14'/%3E%3C/g%3E%3C/svg%3E",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000'/%3E%3Cg fill='none' stroke='%23d4af37'%3E%3Ccircle cx='256' cy='256' r='186' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='150' stroke-width='4' opacity='.7'/%3E%3Ccircle cx='256' cy='256' r='114' stroke-width='4' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23f3d98b'%3E%3Ccircle cx='178' cy='256' r='14'/%3E%3Ccircle cx='216' cy='256' r='14'/%3E%3Ccircle cx='254' cy='256' r='14'/%3E%3Crect x='284' y='242' width='64' height='28' rx='14'/%3E%3C/g%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000'/%3E%3Cg fill='none' stroke='%23d4af37'%3E%3Ccircle cx='256' cy='256' r='186' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='150' stroke-width='4' opacity='.7'/%3E%3Ccircle cx='256' cy='256' r='114' stroke-width='4' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23f3d98b'%3E%3Ccircle cx='178' cy='256' r='14'/%3E%3Ccircle cx='216' cy='256' r='14'/%3E%3Ccircle cx='254' cy='256' r='14'/%3E%3Crect x='284' y='242' width='64' height='28' rx='14'/%3E%3C/g%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000'/%3E%3Cg fill='none' stroke='%23d4af37'%3E%3Ccircle cx='256' cy='256' r='186' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='150' stroke-width='4' opacity='.7'/%3E%3Ccircle cx='256' cy='256' r='114' stroke-width='4' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23f3d98b'%3E%3Ccircle cx='178' cy='256' r='14'/%3E%3Ccircle cx='216' cy='256' r='14'/%3E%3Ccircle cx='254' cy='256' r='14'/%3E%3Crect x='284' y='242' width='64' height='28' rx='14'/%3E%3C/g%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Cuenta atrás y hora local",
+      "short_name": "Cuenta atrás",
+      "url": "./#cuenta"
+    },
+    {
+      "name": "Emitir VGR en Morse",
+      "short_name": "Emitir",
+      "url": "./#emision"
+    },
+    {
+      "name": "Banda sonora del Disco de Oro",
+      "short_name": "Disco de Oro",
+      "url": "./#sonido"
     }
   ]
 }
