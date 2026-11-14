@@ -1,4 +1,4 @@
-Voyager 1 - A 1 Día Luz de Distancia 🚀🌌
+## Voyager 1 - A 1 Día Luz de Distancia 🚀🌌
 
 Una aplicación web interactiva de un solo archivo (HTML/CSS/JS) para celebrar un hito histórico en la exploración espacial: el momento en que la sonda Voyager 1 de la NASA alcanza la distancia de 1 día luz de la Tierra (aproximadamente 25.900 millones de kilómetros).
 
